@@ -1,0 +1,82 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<launch>
+<master auto="start"/>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- REQUIREMENTS TO BRINGUP NAV STACK: -->
+<!-- 1. Odometry stream from base -->
+<!-- 2. Map on the map server -->
+<!-- 3. URDF TF Tree (Check) -->
+<!-- 4. Laser data being published  (Check) -->
+<!-- 5. Base controller that listens to cmd_vel -->
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+<!-- Parameters for LIDAR and Arduino Ports -->
+<arg name="lidar_port" default="/dev/tty/ACM0"/>
+<arg name="arduino_port" default="/dev/ttyACM0"/>
+
+<!-- URDF TF Tree -->
+<include file="$(find talos_navigation)/talos_description/urdf/spawn_robot_model.launch"/>
+
+<!-- Start microphone -->
+<include file="$(find talos_sensors)/launch/start_microphone.launch"/>
+
+<!-- Start speakers -->
+<include file="$(find talos_sensors)/launch/start_speakers.launch"/>
+
+<!-- Speech recognizer -->
+<include file="$(find talos_audio)/launch/recognizer.launch"/>
+
+<!-- Speech listener -->
+<!-- <include file="$(find talos_audio)/launch/listener.launch"/> -->
+
+<!-- USE THIS IF TRACKING IS BEING DONE WITH AN INTEGRATED, OR UVC COMPATIBLE WEBCAM -->
+<!-- Start Object Tracking node -->
+<!-- <include file="$(find ros2opencv)/launch/uvc_cam.launch">
+</include> -->
+
+<!-- Start kinect face tracker/object tracker -->
+<include file="$(find ros2opencv)/launch/openni_node.launch"/>
+<include file="$(find pi_face_tracker)/launch/face_tracker_kinect.launch"/>
+
+<!-- Publish kinect data -->
+<!-- <include file="$(find talos_sensors)/launch/start_kinect.launch"/> -->
+
+<!-- Publish laser data -->
+<include file="$(find talos_sensors)/launch/start_lidar.launch">
+<arg name="lidar_device" value="$(arg lidar_port)"/>
+</include>
+
+<!-- comments -->
+
+<!-- Publish /odom and send /cmd_vel -->
+<!-- <include file="$(find talos_base_controller)/base.launch">
+<arg name="_device_file" value="$(arg arduino_port)"/>
+</include> -->
+
+
+<!-- Start hector mapping -->
+<include file="$(find talos_navigation)/launch/hector_mapping.launch"/>
+
+<!-- RUN AMCL -->
+<include file="$(find talos_navigation)/amcl_diff.launch" />
+
+
+<!-- Transform for kinect frame <node pkg="tf" type="static_transform_publisher" name="kinect_to_talos_base_footprint" args="0 0 0 0 0 0 talos_base_footprint camera_depth_frame 100" /> -->
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_talos_base" args="0 0 0 0 0 0 odom talos_base_footprint 100" />
+
+ <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_talos_base" args="0 0 0 0 0 0 map odom 100" /> -->
+
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find talos_navigation)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find talos_navigation)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find talos_navigation)/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find talos_navigation)/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find talos_navigation)/base_local_planner_params.yaml" command="load" />
+  </node> 
+
+
+</launch>

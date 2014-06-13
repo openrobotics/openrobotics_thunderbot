@@ -1,0 +1,9 @@
+<launch>
+
+<include file="$(find sensors)/launch/start_kinect.launch"/>
+<include file="$(find sensors)/launch/start_microphone.launch"/>
+<include file="$(find sensors)/launch/start_integrated_cam.launch"/>
+<include file="$(find sensors)/launch/start_speakers.launch"/>
+<include file="$(find sensors)/launch/start_lidar.launch"/>
+
+</launch>

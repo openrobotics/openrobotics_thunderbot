@@ -1,0 +1,26 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<!-- Generates a map with the robot TALOS system -->
+<launch>
+
+<!-- Launch the robots transforms -->
+<include file="$(find talos_navigation)/talos_description/urdf/spawn_robot_model.launch"/>
+
+<!-- Load the kinect -->
+<include file="$(find talos_sensors)/launch/start_kinect.launch"/>
+
+<!-- Change depth image to laser scan -->
+<node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan" output="screen"/>
+
+<!-- Start slam gmapping -->
+
+<!-- Load the lidar -->
+
+
+<!-- Load the kinects transforming drivers so that it can be a LaserScan -->
+
+<!-- Load node that prompts to save map -->
+
+
+</launch>

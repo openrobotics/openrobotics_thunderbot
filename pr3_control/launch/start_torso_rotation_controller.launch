@@ -1,0 +1,13 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+
+<launch>
+    <!-- Start tilt joint controller -->
+    <rosparam file="$(find talos_control)/controller_cfg/torso_rotation.yaml" command="load"/>
+    <node name="torso_rotation_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port torso_rotation_port
+                torso_rotation_controller"
+          output="screen"/>
+</launch>

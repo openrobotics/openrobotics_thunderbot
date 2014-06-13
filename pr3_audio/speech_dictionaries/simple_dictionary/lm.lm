@@ -1,0 +1,45 @@
+Language model created by QuickLM on Fri Mar  7 01:50:29 EST 2014
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 5 sentences and 7 words
+
+\data\
+ngram 1=7
+ngram 2=10
+ngram 3=5
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-1.4771 DEVON -0.2218
+-1.4771 FOLLOW -0.2218
+-1.4771 OK -0.2218
+-1.4771 REMEMBER -0.2218
+-1.4771 STOP -0.2218
+
+\2-grams:
+-1.0000 <s> DEVON 0.0000
+-1.0000 <s> FOLLOW 0.0000
+-1.0000 <s> OK 0.0000
+-1.0000 <s> REMEMBER 0.0000
+-1.0000 <s> STOP 0.0000
+-0.3010 DEVON </s> -0.3010
+-0.3010 FOLLOW </s> -0.3010
+-0.3010 OK </s> -0.3010
+-0.3010 REMEMBER </s> -0.3010
+-0.3010 STOP </s> -0.3010
+
+\3-grams:
+-0.3010 <s> DEVON </s>
+-0.3010 <s> FOLLOW </s>
+-0.3010 <s> OK </s>
+-0.3010 <s> REMEMBER </s>
+-0.3010 <s> STOP </s>
+
+\end\

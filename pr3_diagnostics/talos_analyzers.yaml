@@ -1,0 +1,46 @@
+pub_rate: 1.0 # Optional
+base_path: '' # Optional, preprended to all diagnostic output
+analyzers:
+    motors:
+      type: GenericAnalyzer
+      path: Motors
+      startswith: 'EtherCAT'
+
+    sensors:
+      type: AnalyzerGroup
+      path: Sensors
+      analyzers:
+        base_hk:
+        type: GenericAnalyzer
+        path: Base Hokuyo
+        timeout: 5.0
+        find_and_remove_prefix: base_hokuyo_node
+        num_items: 3
+
+    computers:
+      type: GenericAnalyzer
+      path: Computers
+      contains: [
+        'HD Temp', 
+        'CPU Usage', 
+        'CPU Temperature', 
+        'HD Usage',
+        'NFS']
+    joints:
+      type: GenericAnalyzer
+      path: Joints
+      startswith: 'Joint'
+    power:
+      type: GenericAnalyzer
+      path 'Power System'
+      timeout: 5.0
+      startswith: [
+        'Smart Battery',
+        'Power board']
+      expected: [
+        'IBPS 1',
+        'IBPS 2', 
+        'IBPS 3',
+        'IBPS 0']
+
+ 

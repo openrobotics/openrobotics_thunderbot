@@ -1,0 +1,8 @@
+<launch>
+
+<include file="$(find talos_teleop)/ps3_control.launch" />
+<include file="$(find talos_base_controller)/base.launch" />
+
+</launch>
+
+

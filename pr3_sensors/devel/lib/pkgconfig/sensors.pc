@@ -1,0 +1,8 @@
+prefix=/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/devel
+
+Name: sensors
+Description: Description of sensors
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/devel/lib 
+Requires: 

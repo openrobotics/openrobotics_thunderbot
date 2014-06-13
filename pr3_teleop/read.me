@@ -1,0 +1,16 @@
+# notes
+remove output="screen" to prevent ROS_INFO() published by teleop from being written to screen
+
+# using ps3 controller
+1. connect ps3 controller via usb cable and insert bluetooth dongle
+2 $: sudo hciconfig hci0 reset
+3 $: sudo sixpair
+4 unplug ps3 controller 
+5 $: sixad --start 
+6 press PS button when prompted
+7 open new window
+8 $: roslaunch talos_teleop teleop.launch
+
+# to shutdown
+1. in ros window hit ctrl+c
+2. in window for ps3 controller hit ctrl+c

@@ -1,0 +1,7 @@
+tasks
+Arduino sends odometry information to base_controller while base_controller sends speeds to arduino simultaneously
+How to test: arduino program receives cmd_vel (computer -> microcontroller). it then constructs and sends odom messages to computer (computer -> microcontroller)
+Change: received information should be published as odom
+Change: Arduino publishes odom info
+- need where to get odom info from microcontroller
+- need to figure how to wrap that into odom message once back in base_controller

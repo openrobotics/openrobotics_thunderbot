@@ -1,0 +1,5 @@
+<launch>
+
+<node pkg="gscam" type="gscam" name="integrated_camera"/>
+
+</launch>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro" name="talos">
+
+
+<!-- TODO: Future includes for simulator for talos. These are used for gazebo simulations and not required for the physical robot. 
+  <xacro:include filename="$(find pr2_description)/urdf/torso_v0/torso.gazebo.xacro" />
+  <xacro:include filename="$(find pr2_description)/urdf/torso_v0/torso.transmission.xacro" />
+  <xacro:include filename="$(find pr2_description)/urdf/sensors/microstrain_3dmgx2_imu.urdf.xacro" />
+-->
+
+<!--                                               -->
+<!--                 INCLUDED XACROS               -->
+<!--                                               -->
+
+<xacro:include filename="$(find talos_navigation)/talos_description/urdf/torso_v0/talos_torso.urdf.xacro" />
+<xacro:include filename="$(find talos_navigation)/talos_description/urdf/upper_arm_v0/talos_upper_arm_v1.urdf.xacro" />
+<xacro:include filename="$(find talos_navigation)/talos_description/urdf/base_v0/talos_base.urdf.xacro" />
+<xacro:include filename="$(find talos_navigation)/talos_description/urdf/head_v0/talos_head.urdf.xacro" /> 
+<xacro:include filename="$(find talos_navigation)/talos_description/urdf/tilting_laser_v0/talos_tilting_laser.urdf.xacro" />
+
+<!-- Use the macros defined in the xacro above to define actual urdf -->
+
+<!--                                               -->
+<!--                 COMMON CONSTANTS              -->
+<!--                                               -->
+
+<property name="torso_offset_x" value="0.01" />
+<property name="torso_offset_y" value="-0.04" />
+<!-- VALUE: Torso height/2 + base height -->
+<property name="torso_offset_z" value="0.675" />
+
+
+<property name="talos_head_offset_x" value="137" />
+<property name="talos_head_offset_y" value="-0.01" />
+<!-- TODO: Measure proper Z offset for taloshead, and include translations due to pan/tilt -->
+<property name="talos_head_offset_z" value="500" />
+
+<!--                                               -->
+<!--                 TALOS  DEFINITION             -->
+<!--                                               -->
+
+
+<!-- Creates the talos base and the wheels attached to it -->
+<xacro:talos_base name="talos" />
+
+<!-- Creates the talos torso -->
+<xacro:talos_torso name="torso" parent="talos_base_link">
+	<origin xyz="${torso_offset_x} ${torso_offset_y} ${torso_offset_z}" rpy="0 0 0"/>
+</xacro:talos_torso>
+
+<!-- Instantiates the upper arm of talos -->
+<xacro:talos_upper_arm side="left" parent="torso_link" reflect="1" />
+
+<!-- Instantiates talos head -->
+<xacro:talos_head parent="torso_link">
+	<origin xyz="${talos_head_offset_x} ${talos_head_offset_y} ${talos_head_offset_z}" rpy="0 0 0" />
+</xacro:talos_head>
+
+<!-- Instantiates the base laser -->
+
+</robot>

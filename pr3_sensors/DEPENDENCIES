@@ -1,0 +1,32 @@
+## Dependencies that this package must have ##
+
+
+## Laser Scanners
+Hokuyo Node package from ROS
+
+## Kinects
+Openni_launch from kinect
+
+## Cameras
+If you are using an integrated webcam, use GSCAM.
+If you are using a USB webcam, use USB_CAM by ROS.
+
+You must set GSCAM_CONFIG environment variable (as a rosparam) to use GSCAM. 
+Eg: 
+ export GSCAM_CONFIG="v4l2src device=/dev/video0 ! video/x-raw-rgb ! ffmpegcolorspace" $ rosrun gscam gscam
+
+
+## Speakers
+Use the sound_play node from ros
+See: http://wiki.ros.org/sound_play.
+We just run this node and use its respective children nodes to communicate with sounds or text. This will give us text synthesis. 
+
+## Microphone
+Use Audio_play by ROS
+http://wiki.ros.org/audio_common/Tutorials/Streaming%20audio
+
+Use audio_capture by ROS
+sudo apt-get install ros-hydro-audio-capture
+
+This will allow you to interact with audio on /audio topic
+

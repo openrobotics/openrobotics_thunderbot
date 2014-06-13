@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<!-- TODO: Smoke Test this file in gazebo and RVIZ! -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+<!-- Example includes  <	
+<xacro:include filename="$(find pr2_description)/urdf/sensors/hokuyo_lx30_laser.urdf.xacro" />
+<xacro:include filename="$(find pr2_description)/urdf/base_v0/base.gazebo.xacro" />
+<xacro:include filename="$(find pr2_description)/urdf/base_v0/base.transmission.xacro" />
+-->
+
+<!-- CONSTANT DEFINITIONS -->
+<!-- Example 
+
+  <property name="M_PI" value="3.1415926535897931" />
+
+  <property name="caster_offset_x" value="0.2246" />
+  <property name="caster_offset_y" value="0.2246" />
+  <property name="caster_offset_z" value="0.0282" />
+
+-->
+
+<!--                                               -->
+<!--               GENERAL CONSTANTS               -->
+<!--                                               -->
+
+<property name="M_PI" value="3.1415926535897931"/>
+
+<!--                                               -->
+<!--               WHEEL CONSTANTS                 -->
+<!--                                               -->
+
+<property name="wheel_thickness" value="0.01"/>
+<property name="wheel_radius" value="0.0761"/>
+<property name="wheel_damping" value="1.0" />
+<property name="wheel_friction" value="0.0" />
+<property name="safety_k_velocity" value="10" />
+<property name="max_wheel_effort" value="7" />
+<property name="max_wheel_velocity" value="15" />
+
+<!--                                               -->
+<!--                 BASE CONSTANTS                -->
+<!--                                               -->
+
+<!-- TODO: Accurate and precise values or approximations to be filled in -->
+
+<property name="talos_base_mass" value="0" />
+<property name="talos_base_cg_x" value="0" />
+<property name="talos_base_cg_y" value="0" />
+<property name="talos_base_cg_z" value="0" />
+<property name="talos_base_collision_size_z" value="0" />
+
+<property name="talos_base_width" value="0.60" />
+<property name="talos_base_height" value="0.30" />
+<property name="talos_base_length" value="0.60" />
+
+<!-- DEPRECATED, Moved to talos_tilting_laser.urdf.xacro
+<property name="talos_base_laser_x" value="0" />
+<property name="talos_base_laser_y" value="0.15" />
+<property name="talos_base_laser_z" value="0.3" /> -->
+
+<!-- Half of wheel height + half of base height -->
+<property name="talos_base_z" value="${(wheel_radius/2)+(talos_base_height)/2}"/>
+
+<!--                                               -->
+<!--                WHEEL DEFINITION               -->
+<!--                                               -->
+
+<xacro:macro name="talos_wheel" params="suffix parent reflect_side reflect_back">
+
+<joint name="${parent}_${suffix}_wheel_joint" type="continuous">
+	<parent link="${parent}"/>
+	<child link="${parent}_${suffix}_wheel_link"/>
+	<origin rpy="0 1.57 0" xyz="${reflect_side*0.15} ${reflect_back*0.15} -0.15"/>
+	<axis xyz="0 1 0" />
+       <limit effort="${max_wheel_effort}" velocity="${max_wheel_velocity}"/> <!-- alpha tested effort and velocity limits -->
+       <safety_controller k_velocity="${safety_k_velocity}" />
+       <dynamics damping="${wheel_damping}" friction="${wheel_friction}" />
+</joint>
+
+<link name="${parent}_${suffix}_wheel_link">
+	<visual>
+		<geometry>
+			<cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+		</geometry>
+	<!-- TODO: Add correct meshes for wheels -->
+	<!-- <geometry>
+          <mesh filename="package://pr2_description/meshes/base_v0/wheel.dae" />
+        </geometry> -->
+		<origin rpy="0 0 0" xyz="0 0 0"/>
+		<material name="black">
+			<color rgba="0 0 0 1"/>
+		</material>
+	<!-- TODO: Add correct collision values or close approximations -->
+       <!-- 
+
+	<collision>
+		 <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" /> 
+		 <geometry>
+		   <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+		 </geometry>
+       </collision> 
+	-->
+	</visual>
+	<!-- TODO: Jordan, please initialize these to correct approximations -->
+       <!-- 
+	<inertial>
+        <mass value="0.44036" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+                  iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943" />
+      </inertial>
+       -->
+</link>
+ <!-- TODO: Add proper extensions and transmissions for talos -->
+ <!-- extensions -->
+ <!--  <xacro:pr2_wheel_gazebo_v0 parent="${parent}" suffix="${suffix}" />
+    <xacro:pr2_wheel_transmission_v0 parent="${parent}" suffix="${suffix}" reflect="${reflect}" />
+ -->
+</xacro:macro>
+
+<!--                       Base Definition                 -->
+<!--                       Base Definition                 -->
+<!--                       Base Definition                 -->
+
+<xacro:macro name="talos_base" params="name">
+
+<link name="talos_base_link">
+
+	<!-- TODO: Jordan to put proper values for the xml below
+	<inertial>
+        <mass value="${talos_base_mass}" />
+        <origin xyz="${talos_base_cg_x} ${talos_base_cg_y} ${talos_base_cg_z}" />
+        <inertia ixx="5.652232699207" ixy="-0.009719934438" ixz="1.293988226423"
+                 iyy="5.669473158652" iyz="-0.007379583694" izz="3.683196351726" />
+      </inertial>
+      -->
+  	<visual>
+              <!-- TODO: Replace with .dae file -->
+		<geometry>
+			<box size="${talos_base_width} ${talos_base_length} ${talos_base_height}"/>
+		</geometry>
+
+		<origin rpy="0 0 0" xyz="0 0 0"/>
+
+              <!-- TODO: Replace with .stl file -->
+		<material name="white">
+			<color rgba="1 1 1 1"/>
+		</material>
+	</visual>
+
+   <!-- TODO: Add collisions
+   <collision>
+
+        <origin xyz="0 0 0" rpy="0 0 0" />
+	 TODO: Replace with .stl file 
+        <geometry>
+          <mesh filename="package://pr2_description/meshes/base_v0/base_L.stl" />
+        </geometry> 
+
+      </collision>
+    -->
+</link>
+
+<!-- talos_base_footprint is a fictitious link(frame) that is on the ground right below base_link origin,
+navigation stack dedpends on this frame -->
+<link name="${name}_base_footprint">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                 iyy="0.01" iyz="0.0" izz="0.01" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.01 0.01 0.01" />
+        </geometry>
+        
+        <material name="White" />
+      </visual>
+      <collision>
+        <!--represent base collision with a simple rectangular model, positioned by base_size_z s.t. top
+surface of the collision box matches the top surface of the PR2 base -->
+        <origin xyz="0 0 ${0.051+talos_base_collision_size_z/2}" rpy="0 0 0" />
+        <geometry>
+          <box size="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_base_footprint_joint" type="fixed">
+      <origin xyz="0 0 ${talos_base_z}" rpy="0 0 0" />
+      <child link="talos_base_link" />
+      <parent link="${name}_base_footprint"/>
+    </joint>
+
+
+<!-- I'm not sure how this got added in.. but what the fuck? 
+    <xacro:hokuyo_lx30_laser_v0 name="${name}_base_laser" parent="talos_base" ros_topic="base_scan" update_rate="20" min_angle="-2.2689" max_angle="2.2689" >
+      <origin xyz="${talos_base_laser_x} ${talos_base_laser_y} ${talos_base_laser_z}" rpy="0 0 0" />
+    </xacro:hokuyo_lx30_laser_v0> 
+ It should've been in the tilting laser file.. -->
+
+
+ <!-- Adding TALOS wheels to the base -->
+<xacro:talos_wheel suffix="fl" parent="talos_base_link" reflect_side="1" reflect_back="1"/>
+<xacro:talos_wheel suffix="fr" parent="talos_base_link" reflect_side="-1" reflect_back="1"/>
+<xacro:talos_wheel suffix="bl" parent="talos_base_link" reflect_side="1" reflect_back="-1"/>
+<xacro:talos_wheel suffix="br" parent="talos_base_link" reflect_side="-1" reflect_back="-1"/>
+
+</xacro:macro>
+
+</robot>

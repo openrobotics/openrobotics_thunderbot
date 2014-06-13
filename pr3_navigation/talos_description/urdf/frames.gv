@@ -1,0 +1,14 @@
+digraph G {
+"torso_link" -> "left_shoulder_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.196 Hz\nMost recent transform: 1393700951.424 \nBuffer length: 4.921 sec\n"];
+"talos_base_link" -> "torso_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"talos_base_footprint" -> "talos_base_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.196 Hz\nMost recent transform: 1393700951.424 \nBuffer length: 4.921 sec\n"];
+"talos_base_link" -> "talos_base_laser_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.196 Hz\nMost recent transform: 1393700951.424 \nBuffer length: 4.921 sec\n"];
+"talos_base_laser_link" -> "talos_base_laser_simulator_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.196 Hz\nMost recent transform: 1393700951.424 \nBuffer length: 4.921 sec\n"];
+"torso_link" -> "head_pan_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"head_pan_link" -> "head_tilt_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"left_shoulder_link" -> "left_upper_arm_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"talos_base_link" -> "talos_base_link_bl_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"talos_base_link" -> "talos_base_link_br_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"talos_base_link" -> "talos_base_link_fl_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+"talos_base_link" -> "talos_base_link_fr_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.208 Hz\nMost recent transform: 1393700950.861 \nBuffer length: 4.800 sec\n"];
+}

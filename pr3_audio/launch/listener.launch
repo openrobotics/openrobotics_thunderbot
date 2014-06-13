@@ -1,0 +1,8 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<launch>
+
+<node pkg="talos_audio" name="talos_audio_node" type="talos_audio.py" output="screen"/>
+
+</launch>

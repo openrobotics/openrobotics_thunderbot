@@ -1,0 +1,21 @@
+digraph G {
+"camera_rgb_frame" -> "camera_rgb_optical_frame"[label="Broadcaster: /camera_base_link3\nAverage rate: 10.188 Hz\nMost recent transform: 1393973288.611 \nBuffer length: 4.908 sec\n"];
+"camera_link" -> "camera_rgb_frame"[label="Broadcaster: /camera_base_link1\nAverage rate: 10.184 Hz\nMost recent transform: 1393973288.651 \nBuffer length: 4.910 sec\n"];
+"odom" -> "base_footprint"[label="Broadcaster: /base_controller_node\nAverage rate: 19.662 Hz\nMost recent transform: 12.483 \nBuffer length: 2.543 sec\n"];
+"torso_link" -> "left_shoulder_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.204 Hz\nMost recent transform: 1393973289.067 \nBuffer length: 4.960 sec\n"];
+"talos_base_link" -> "torso_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"talos_base_footprint" -> "talos_base_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 54.541 Hz\nMost recent transform: 1393973289.067 \nBuffer length: 5.482 sec\n"];
+"odom" -> "talos_base_footprint"[label="Broadcaster: /odom_to_talos_base\nAverage rate: 10.187 Hz\nMost recent transform: 1393973288.666 \nBuffer length: 4.908 sec\n"];
+"talos_base_link" -> "talos_base_laser_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.204 Hz\nMost recent transform: 1393973289.067 \nBuffer length: 4.960 sec\n"];
+"talos_base_laser_link" -> "talos_base_laser_simulator_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.204 Hz\nMost recent transform: 1393973289.067 \nBuffer length: 4.960 sec\n"];
+"torso_link" -> "head_pan_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"head_pan_link" -> "head_tilt_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"left_shoulder_link" -> "left_upper_arm_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"talos_base_link" -> "talos_base_link_bl_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"talos_base_link" -> "talos_base_link_br_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"talos_base_link" -> "talos_base_link_fl_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"talos_base_link" -> "talos_base_link_fr_wheel_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10.204 Hz\nMost recent transform: 1393973288.511 \nBuffer length: 4.900 sec\n"];
+"camera_depth_frame" -> "camera_depth_optical_frame"[label="Broadcaster: /camera_base_link2\nAverage rate: 10.190 Hz\nMost recent transform: 1393973288.631 \nBuffer length: 4.907 sec\n"];
+"camera_link" -> "camera_depth_frame"[label="Broadcaster: /camera_base_link\nAverage rate: 10.188 Hz\nMost recent transform: 1393973288.656 \nBuffer length: 4.908 sec\n"];
+"map" -> "scanmatcher_frame"[label="Broadcaster: /hector_slam\nAverage rate: 10.259 Hz\nMost recent transform: 1393973288.459 \nBuffer length: 4.874 sec\n"];
+}

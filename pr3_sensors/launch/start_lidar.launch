@@ -1,0 +1,18 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<launch>
+
+<arg name="lidar_device" default="/dev/ttyACM1"/>
+
+<node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node" output="screen">
+
+<!-- See wiki.ros.org/hokuyo_node for more details -->
+<!-- This is wrong, it should be the talos_base_laser but it gives an error with hector slam and icbf to fix it atm -->
+<param name="frame_id" value="talos_base_laser_link"/>
+<param name="port" value="$(arg lidar_device)" />
+
+</node>
+
+
+</launch>

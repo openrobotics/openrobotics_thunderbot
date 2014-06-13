@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<!-- TODO: Smoke Test this file in gazebo and RVIZ! -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro" name="talos_tilting_laser">
+
+<xacro:include filename="$(find talos_navigation)/talos_description/urdf/sensors/hokuyo_lx30_laser.urdf.xacro" />
+
+<!--                                               -->
+<!--               GENERAL CONSTANTS               -->
+<!--                                               -->
+<property name="talos_base_laser_x" value="0" />
+<property name="talos_base_laser_y" value="0.15" />
+<property name="talos_base_laser_z" value="0" />
+
+<property name="M_PI" value="3.1415926535897931"/>
+
+
+<!-- No longer need small hack, DEPRECATED
+Small hack to get around the fact that hokuyo xacro adds a _link to the parent name
+<link name="talos_base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0 0 0" />
+      </geometry>
+    </visual>
+</link>  -->
+
+<!-- 
+<joint name="talos_base_link_hack" type="fixed">
+ <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="talos_base" />
+    <child link="talos_base_link"/>
+
+</joint> -->
+<!-- End of hack -->
+
+<!-- base laser -->
+    <xacro:hokuyo_lx30_laser_v0 name="talos_base_laser" parent="talos_base" ros_topic="scan" update_rate="20" min_angle="-2.2689" max_angle="2.2689" >
+      <origin xyz="${talos_base_laser_x} ${talos_base_laser_y} ${talos_base_laser_z}" rpy="0 0 0" />
+    </xacro:hokuyo_lx30_laser_v0>
+
+<joint name="talos_base_laser_simulator_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="talos_base_laser_link" />
+    <child link="talos_base_laser_simulator_link"/>
+  </joint>
+
+<!-- This allows us to see it in rviz/gazebo -->
+<link name="talos_base_laser_simulator_link">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001"  ixy="0.0"  ixz="0.0"
+               iyy="0.001"  iyz="0.0"
+               izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.1" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+
+</robot>

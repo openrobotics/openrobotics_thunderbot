@@ -1,0 +1,11 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<launch>
+  <node pkg="diagnostic_aggregator" type="aggregator_node"
+        name="diagnostic_aggregator" >
+    <!-- Load the file you made above -->
+    <rosparam command="load" 
+              file="$(find talos_diagnostics)/analyzers.yaml" />
+  </node>
+</launch>

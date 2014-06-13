@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<!-- TODO: Smoke Test this file in gazebo and RVIZ! -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro" name="talos_head">
+
+
+<!--                                               -->
+<!--               GENERAL CONSTANTS               -->
+<!--                                               -->
+
+<property name="M_PI" value="3.1415926535897931"/>
+
+<!-- TODO: Set proper values for the constants defined below -->
+<!-- TODO: Head_pan_joint variables -->
+<property name="max_head_pan_effort" value="10" />
+<property name="max_head_pan_velocity" value="10" />
+<property name="head_pan_safety_k_velocity" value="10" />
+<property name="head_pan_damping" value="10" />
+<property name="head_pan_frictoin" value="10" />
+
+<!-- TODO: Set head_pan_link variables -->
+<property name="head_pan_link_mass" value="3" />
+
+<!-- TODO: Set head_tilt joint variables -->
+<property name="head_tilt_min_angle" value="-1" />
+<property name="head_tilt_max_angle" value="1" />
+<property name="head_tilt_max_vel" value="10" />
+<property name="head_tilt_max_effort" value="10" />
+<property name="head_tilt_safety_k_velocity" value="10" />
+<property name="head_tilt_damping" value="10" />
+<property name="head_tilt_link_mass" value="10" />
+
+
+<!--                                               -->
+<!--               TALOS_HEAD_PAN                  -->
+<!--                                               -->
+
+<xacro:macro name="talos_head_pan" params="name parent *origin">
+
+<joint name="${name}_joint" type="continuous">
+	<parent link="${parent}"/>
+	<child link="${name}_link"/>
+	<xacro:insert_block name="origin"/>
+	<axis xyz="0 0 1" />
+       <limit effort="${max_head_pan_effort}" velocity="${max_head_pan_velocity}" /> 
+	<!-- TODO: Not sure what this is -->
+      <!--  <safety_controller k_velocity="${head_pan_safety_k_velocity}" /> -->
+	<!-- TODO: set proper values first -->
+       <!-- <dynamics damping="${head_pan_damping}" friction="${head_pan_friction}" /> -->
+</joint>
+
+<link name="${name}_link">
+
+	<!-- TODO: Fill in constants above related to inertia -->
+      <!-- <inertial>
+        <mass value="${head_pan_link_mass}" /> 
+        <origin xyz="0 0 0" rpy="0 0 0" />
+ 	TODO: These are the incorrect inertias 
+        <inertia ixx="0.032497592" ixy="0.00063604088" ixz="0.0025851534"
+                 iyy="0.046545627" iyz="-0.0024534295" izz="0.057652724" />
+      </inertial> -->
+
+      <visual>
+        <origin xyz="0 0 0.0" rpy="0 0 0 " />
+	<!-- TODO: Insert proper .dae file for the visual mesh -->
+        <!-- <geometry>
+          <mesh filename="package://pr2_description/meshes/head_v0/head_pan.dae" />
+        </geometry> -->
+	<!-- TODO: Approximation -->
+        <geometry>
+		<box size="0 0 0" />
+	</geometry>
+
+        <material name="Blue" />
+      </visual>
+
+	<!-- TODO: Insert the proper .stl file for collisions -->
+      <!-- <collision>
+        <geometry>
+          <mesh filename="package://pr2_description/meshes/head_v0/head_pan_L.stl" />
+        </geometry>
+      </collision> -->
+
+</link>
+<!-- extensions -->
+<!-- TODO: Add transmissions here 
+    <xacro:pr2_head_pan_transmission_v0 name="${name}" /> -->
+</xacro:macro>
+
+
+<!--                                               -->
+<!--               TALOS_HEAD_TILT                 -->
+<!--                                               -->
+
+<xacro:macro name="talos_head_tilt" params="name parent *origin">
+
+<joint name="${name}_joint" type="revolute">
+      <axis xyz="0 1 0" />
+
+      <!-- TODO: Set proper values for the lower, upper, vel, and effort. They are fudge values atm -->
+      <limit lower="${head_tilt_min_angle}" upper="${head_tilt_max_angle}" effort="${head_tilt_max_effort}" velocity="${head_tilt_max_vel}" />
+
+      <safety_controller k_velocity="${head_tilt_safety_k_velocity}" soft_lower_limit="${-0.4712 + 0.1}" soft_upper_limit="${1.39626 - 0.1}" k_position="100" />
+
+      <!-- TODO: What is calibration for? -->
+      <!-- <calibration falling="${0.0+cal_head_tilt_flag}" /> -->
+      <dynamics damping="${head_tilt_damping}" />
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+
+</joint>
+
+
+ <link name="${name}_link">
+
+      <!-- TODO: insert proper inertial values 
+      <inertial>
+        <mass value="${head_tilt_link_mass}" /> 
+        <origin xyz="0.001716 -0.019556 0.055002" rpy="0 0 0" />
+        <inertia ixx="0.024223222" ixy="0.00062063507" ixz="-0.000096909696"
+                 iyy="0.054723086" iyz="0.00279702400"
+                 izz="0.067306377" />
+      </inertial> -->
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+
+	<!-- TODO: get .dae for proper geometry generation 
+        <geometry>
+          <mesh filename="package://pr2_description/meshes/head_v0/head_tilt.dae" />
+        </geometry> -->
+	<geometry>
+		<!-- TODO: Proper values, these are fudged for sake of parsing -->
+		<box size="0.1 0.1 0.1" />
+	</geometry>
+        
+        <material name="Green" />
+      </visual>
+
+
+	<!-- TODO: get .stl for proper collision generation 
+      <collision>
+        <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+
+        <geometry>
+          <mesh filename="package://pr2_description/meshes/head_v0/head_tilt_L.stl" />
+        </geometry>
+      </collision> -->
+
+    </link>
+
+<!-- extensions -->
+<!-- TODO: Add transmissions -->
+<!-- <xacro:pr2_head_tilt_transmission_v0 name="${name}" /> -->
+
+</xacro:macro>
+
+
+
+<!--                                               -->
+<!--            TALOS HEAD INSTANTIATION           -->
+<!--                                               -->
+
+
+<!-- Instantiate the head of talos -->
+<xacro:macro name="talos_head" params="parent *origin">
+
+	<!-- Instantiate the head_pan of talos -->
+	<xacro:talos_head_pan name="head_pan" parent="${parent}">
+		<xacro:insert_block name="origin" />
+	</xacro:talos_head_pan>
+
+	<!-- Instantiate the head tilt of talos -->
+	<xacro:talos_head_tilt name="head_tilt" parent="head_pan_link">
+		<!-- TODO: Proper positioning of tilt mechanism -->
+		<origin xyz="0 0 0" rpy="0 0 0" />
+	</xacro:talos_head_tilt>
+
+</xacro:macro>
+
+</robot>

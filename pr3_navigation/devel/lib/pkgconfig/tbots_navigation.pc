@@ -1,0 +1,8 @@
+prefix=/home/marco/catkin_ws/src/tbots_navigation/devel
+
+Name: tbots_navigation
+Description: Description of tbots_navigation
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/marco/catkin_ws/src/tbots_navigation/devel/lib 
+Requires: 

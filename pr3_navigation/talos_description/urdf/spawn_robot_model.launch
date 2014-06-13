@@ -1,0 +1,20 @@
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<launch>
+	<!-- Hardcoded the model parameter to talos_common.urdf -->
+	 <!-- <arg name="model" /> -->
+
+	<arg name="gui" default="False" />
+	<param name="robot_description" textfile="$(find talos_navigation)/talos_description/urdf/talos_common.urdf" />
+	<param name="use_gui" value="$(arg gui)"/>
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+        <!-- Static transform from kinect to the head tilt link -->
+        
+<node pkg="tf" type="static_transform_publisher" name="kinect_to_head" args="0 0 0 0 0 0 head_tilt_link camera_link 100" /> 
+
+
+	<!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.rviz" required="true" /> -->
+</launch>

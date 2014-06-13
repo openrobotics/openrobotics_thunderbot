@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!-- Author: Devon Ash -->
+<!-- Maintainer: noobaca2@gmail.com -->
+
+<!-- XML namespaces -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro" name="talos">
+
+ <!-- Things that are needed only for Gazebo (not the physical robot). These include
+sensor and controller plugin specifications -->
+<!-- 
+  <xacro:include filename="$(find pr2_description)/urdf/upper_arm_v0/upper_arm.gazebo.xacro" />
+  <xacro:include filename="$(find pr2_description)/urdf/upper_arm_v0/upper_arm.transmission.xacro" />
+  <xacro:include filename="$(find pr2_description)/urdf/common.xacro" />
+-->
+
+<!--                                               -->
+<!--                 ARM CONSTANTS                 -->
+<!--                                               -->
+
+<property name="shoulder_mass" value="10" />
+<property name="shoulder_height" value="0.22" />
+<property name="shoulder_width" value="0.1" />
+<property name="shoulder_length" value="0.2" />
+<property name="upper_arm_width" value="0.2"/>
+<property name="upper_arm_height" value="0.22"/>
+<property name="upper_arm_length" value="0.47" />
+
+<!-- TODO: Proper values for these variables -->
+<property name="shoulder_joint_lower_angle_bound" value="-1.56" />
+<property name="shoulder_joint_upper_angle_bound" value="1.56" />
+<property name="shoulder_joint_max_effort" value="10" />
+<property name="shoulder_joint_max_velocity" value="10" />
+<property name="shoulder_joint_calibration_falling" value="0" />
+<property name="shoulder_joint_damping" value="0" />
+
+
+<xacro:macro name="talos_upper_arm" params="side parent reflect">
+
+<joint name="${side}_shoulder_joint" type="fixed">
+	<!-- TODO: Add proper values for xyz -->	
+	<!-- Note: Crude approximation of physical robot -->
+  	<parent link="${parent}"/>
+	<child link="${side}_shoulder_link"/>
+	<origin rpy="0 0 1.57" xyz="0.25 0.1 0.39"/>
+</joint>
+
+<link name="${side}_shoulder_link">
+	<!-- TODO: Jordan start -->
+	<!-- TODO Jordan: Please fill in the required values specified by "0" or near approximations -->
+	<inertial>
+		<mass value="${shoulder_mass}" />
+		<origin xyz="0 0 0" />
+		<inertia ixx="0" ixy="0" ixz="0"
+			  iyy="0" iyz="0"
+			  izz="0" />
+	</inertial>
+        <!-- TODO: Jordan end -->
+
+        <!-- TODO: Someone? Not sure how these are done yet. -->
+	<!-- <collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+		  <mesh filename="package://pr2_description/meshes/upper_arm_v0/elbow_flex.stl" /> 
+		</geometry>
+	</collision> -->
+
+	<visual>
+
+		<geometry>
+			<box size="${shoulder_length} ${shoulder_width} ${shoulder_height}" />
+		</geometry>
+		<origin rpy="0 0 0" xyz="0 0 0"/>
+		<!-- TODO: Add meshes -->
+		<!-- TODO: Add .dae material file -->
+		<material name="white">
+			<color rgba="1 1 1 1"/>
+		</material>
+	</visual>
+</link>
+
+<joint name="${side}_shoulder_to_upper_${side}_arm_joint" type="revolute">
+
+        <!-- Note: Crude approximation of the joint, this is not the exact connecting joint location -->
+  	<parent link="${side}_shoulder_link"/>
+	<child link="${side}_upper_arm_link"/>
+	<origin rpy="1.57 0 0" xyz="0 -0.235 0"/>
+
+	<!-- Note: Code template taken from PR2_upper_arm.urdf for templating -->
+	<!-- Doc: axis of revolution -->
+	<!-- TODO Jordan Start -->
+	<!-- TODO Jordan: Please fill in the required values specified by "0" or near approximations -->
+	<axis xyz="0 1 0" />
+	<!-- TODO Jordan: lower rotation degree w.r.t specified axis, same thing for upper. Effort is max force in newtons. Velocity is max velocity of joint. -->
+	<limit lower="${shoulder_joint_lower_angle_bound}" upper="${shoulder_joint_lower_angle_bound}" effort="${shoulder_joint_max_effort}" velocity="${shoulder_joint_max_velocity}" /> 
+
+        <!-- Note: PR2 Has safety controller, not sure what it's for yet or what the values do-->
+	<!-- <safety_controller k_position="100" k_velocity="3" soft_lower_limit="${-2.3213+0.2}" soft_upper_limit="${0.00-0.15}" /> -->
+
+        <!-- Note: Jordan, do you know what this could be? -->
+	<calibration falling="${shoulder_joint_calibration_falling}"/>
+
+        <!-- TODO: Jordan -->
+	<dynamics damping="${shoulder_joint_damping}" />
+        <!-- TODO: Jordan end -->
+
+</joint>
+
+<link name="${side}_upper_arm_link">
+
+	<!-- TODO: Jordan start -->
+	<!-- TODO Jordan: Please fill in the required values specified by "0" or near approximations -->
+	<inertial>
+		<mass value="0" />
+		<origin xyz="0 0 0" />
+		<inertia ixx="0" ixy="0" ixz="0"
+			  iyy="0" iyz="0"
+			  izz="0" />
+	</inertial>
+        <!-- TODO: Jordan end -->
+
+        <!-- TODO: Someone? Not sure how these are done yet. -->
+	<!-- <collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+		TODO: Add .stl file for proper collision matrix
+		   <mesh filename="package://pr2_description/meshes/upper_arm_v0/elbow_flex.stl" />
+		</geometry>
+	</collision> -->
+
+	<visual>
+		<geometry>
+			<box size="${upper_arm_length} ${upper_arm_width} ${upper_arm_height}"/>
+		</geometry>
+		<origin rpy="0 0 0" xyz="0 0 0"/>
+	
+		<!-- TODO: Add meshes -->
+		<!-- TODO: Add .dae file for material mesh -->
+		<material name="white">
+			<color rgba="1 1 1 1"/>
+		</material>
+	</visual>
+
+</link>
+
+</xacro:macro>
+
+
+
+</robot>
+

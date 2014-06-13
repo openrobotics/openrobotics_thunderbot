@@ -1,0 +1,7 @@
+// Thunderbots@Home Software Team, University of British Columbia
+// Author: Devon Ash
+// Created: 21/09/13
+// README file, instructions for the @Home Robot
+
+1. For starting the robot, please run start_robot.sh
+2. For starting the sensors, please run start_sensors.sh

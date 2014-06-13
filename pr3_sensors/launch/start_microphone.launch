@@ -1,0 +1,5 @@
+<launch>
+
+<node pkg="audio_capture" type="audio_capture" name="microphone_node"/>
+
+</launch>

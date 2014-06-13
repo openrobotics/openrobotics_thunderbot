@@ -1,0 +1,7 @@
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/CMakeFiles/_catkin_empty_exported_target.dir
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/CMakeFiles/clean_test_results.dir
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/CMakeFiles/doxygen.dir
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/gtest/CMakeFiles/gtest.dir
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/gtest/CMakeFiles/gtest_main.dir
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/CMakeFiles/run_tests.dir
+/home/marco/catkin_ws/athomesoftware/athomesoftware/sensors/CMakeFiles/tests.dir
